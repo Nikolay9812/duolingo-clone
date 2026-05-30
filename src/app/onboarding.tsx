@@ -16,6 +16,8 @@ export default function Onboarding() {
           <View className="flex-row items-center gap-x-3">
             <Image
               source={images.mascotLogo}
+              accessibilityLabel="Mascot logo"
+              accessibilityRole="image"
               style={{ width: 40, height: 40, resizeMode: "contain" }}
             />
             <Text className="text-h3 font-poppins-bold text-[#101828]">
@@ -56,13 +58,18 @@ export default function Onboarding() {
             </View>
             <Image
               source={images.mascotWelcome}
+              accessibilityLabel="Welcome mascot"
+              accessibilityRole="image"
               style={{ width: 320, height: 320, resizeMode: "contain" }}
             />
           </View>
         </View>
 
         <Link href="/" asChild>
-          <TouchableOpacity className="mb-6 rounded-[28px] bg-[#5b3bf6] px-6 py-5">
+          <TouchableOpacity
+            accessibilityRole="button"
+            className="mb-6 rounded-[28px] bg-[#5b3bf6] px-6 py-5"
+          >
             <Text className="text-center text-body-medium font-poppins-semibold text-white">
               Get Started
             </Text>
