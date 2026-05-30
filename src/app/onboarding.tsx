@@ -65,7 +65,7 @@ export default function Onboarding() {
           </View>
         </View>
 
-        <Link href="/" asChild>
+        <Link href="/(auth)/signup" asChild>
           <TouchableOpacity
             accessibilityRole="button"
             className="mb-6 rounded-[28px] bg-[#5b3bf6] px-6 py-5"
