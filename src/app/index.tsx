@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   return (
@@ -10,6 +11,14 @@ export default function Index() {
         Built with the Lingua design system, brand tokens, and Poppins
         typography.
       </Text>
+
+      <Link href="/onboarding" asChild>
+        <TouchableOpacity className="mt-8 rounded-3xl bg-primary px-6 py-4">
+          <Text className="text-body-medium font-poppins-semibold text-white">
+            Open Onboarding
+          </Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
