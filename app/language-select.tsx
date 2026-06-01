@@ -1,6 +1,7 @@
 import { images } from "@/constants/images";
 import { LANGUAGES } from "@/data/languages";
-import { Language } from "@/types/learning";
+import { useLanguageStore } from "@/store/languageStore";
+import { Language, LanguageCode } from "@/types/learning";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -16,6 +17,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LanguageSelectScreen() {
+  const { setSelectedLanguage } = useLanguageStore();
   const [selectedCode, setSelectedCode] = useState<string>(LANGUAGES[0].code);
   const [search, setSearch] = useState("");
 
@@ -28,11 +30,11 @@ export default function LanguageSelectScreen() {
     return (
       <TouchableOpacity
         onPress={() => setSelectedCode(item.code)}
-        style={[styles.languageItem, isSelected && styles.selectedItem]}
+        className={`flex-row items-center py-3.5 px-3.5 bg-white border-[1.5px] rounded-[14px] ${isSelected ? "bg-[rgba(108,78,245,0.08)] border-lingua-purple" : "border-transparent"}`}
         activeOpacity={0.8}
       >
         <Image source={{ uri: item.flag }} style={styles.flag} />
-        <View style={{ flex: 1, marginLeft: 12 }}>
+        <View className="flex-1 ml-3">
           <Text className="font-poppins-semibold text-base text-text-primary">
             {item.name}
           </Text>
@@ -41,7 +43,7 @@ export default function LanguageSelectScreen() {
           </Text>
         </View>
         {isSelected ? (
-          <View style={styles.checkCircle}>
+          <View className="w-6.5 h-6.5 rounded-full bg-lingua-purple items-center justify-center">
             <Ionicons name="checkmark" size={14} color="#fff" />
           </View>
         ) : (
@@ -93,7 +95,7 @@ export default function LanguageSelectScreen() {
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
         ItemSeparatorComponent={() => (
-          <View style={styles.separator} />
+          <View className="h-px bg-gray-200" />
         )}
       />
 
@@ -102,7 +104,10 @@ export default function LanguageSelectScreen() {
         <TouchableOpacity
           className="bg-lingua-purple rounded-2xl items-center py-4"
           activeOpacity={0.85}
-          onPress={() => router.back()}
+          onPress={() => {
+            setSelectedLanguage(selectedCode as LanguageCode);
+            router.replace("/");
+          }}
         >
           <Text className="font-poppins-semibold text-base text-white">
             Continue
@@ -117,34 +122,12 @@ export default function LanguageSelectScreen() {
 }
 
 const styles = StyleSheet.create({
-  languageItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 14,
-    paddingHorizontal: 14,
-    backgroundColor: "#fff",
-    borderWidth: 1.5,
-    borderColor: "transparent",
-    borderRadius: 14,
-  },
-  selectedItem: {
-    backgroundColor: "rgba(108, 78, 245, 0.08)",
-    borderColor: "#6c4ef5",
-  },
   flag: {
     width: 44,
     height: 44,
     borderRadius: 22,
     borderWidth: 1,
     borderColor: "#e5e7eb",
-  },
-  checkCircle: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: "#6c4ef5",
-    alignItems: "center",
-    justifyContent: "center",
   },
   searchInput: {
     flex: 1,
@@ -156,10 +139,6 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 16,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#e5e7eb",
   },
   earthImage: {
     width: "100%",
